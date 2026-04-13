@@ -50,12 +50,21 @@ export interface SessionRow {
   trainer_name: string;
 }
 
+export interface FindSessionsQuery {
+  page?: string | number;
+  limit?: string | number;
+  memberId?: string | number;
+  trainerId?: string | number;
+  status?: string;
+  date?: string;
+}
+
 @Injectable()
 export class PtSessionsService {
   constructor(private db: DatabaseService) {}
 
   /** Get all sessions with filters */
-async findAll(query: any) {
+async findAll(query: FindSessionsQuery) {
   try {
     // Pagination
     const page = Number(query.page) > 0 ? Number(query.page) : 1;
@@ -119,12 +128,12 @@ async findAll(query: any) {
         totalPages: Math.ceil(total / limit),
       },
     };
-  } catch (error:any) {
+  } catch (error: unknown) {
     console.error('Error fetching sessions:', error);
 
     return {
       success: false,
-      message: error.message || 'Internal Server Error',
+      message: error instanceof Error && error.message ? error.message : 'Internal Server Error',
       statusCode: 500,
     };
   }
@@ -309,13 +318,13 @@ async cancelSession(id: number) {
 
     // 🔥 STEP 3: UPDATE SESSION
     await conn.execute(
-      SessionStatus.CANCELLED,
+      PtSessionQueries.CANCEL_SESSION,
       [SessionStatus.CANCELLED, id],
     );
 
     // 🔥 STEP 4: FREE SLOT
     await conn.execute(
-      SlotStatus.AVAILABLE,
+      PtSessionQueries.FREE_SLOT,
       [SlotStatus.AVAILABLE, session.slot_id],
     );
 
@@ -336,7 +345,7 @@ async completeSession(id: number) {
   return this.db.transaction(async (conn) => {
     // 🔒 STEP 1: LOCK SESSION
     const [rows] = await conn.query<RowDataPacket[]>(
-     PtSessionQueries.COMPLETE_SESSION,
+     PtSessionQueries.LOCK_CANCEL_STATUS,
       [id],
     );
 

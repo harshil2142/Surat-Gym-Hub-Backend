@@ -19,7 +19,7 @@ import { UserRole } from '../common/enums';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard' // ✅ ADD THIS
 import type { RequestWithUser } from 'src/common/types/request-with-user';
-import { plainToInstance } from 'class-transformer';
+import { plainToInstance, instanceToPlain } from 'class-transformer';
 import { MembershipResponseDto } from './dto/membership-response.dto';
 
 @ApiBearerAuth()
@@ -33,10 +33,12 @@ export class MembershipsController {
 async findAll(@Req() req: RequestWithUser) {
   const plans = await this.membershipsService.findAll();
 
-  return plainToInstance(MembershipResponseDto, plans, {
+  const transformed = plainToInstance(MembershipResponseDto, plans, {
     groups: [req.user.role],
     excludeExtraneousValues: true,
   });
+
+  return instanceToPlain(transformed, { groups: [req.user.role] });
 }
   /** ✅ Get single plan */
   @Get(':id')
@@ -46,10 +48,12 @@ async findOne(
 ) {
   const plan = await this.membershipsService.findOne(id);
 
-  return plainToInstance(MembershipResponseDto, plan, {
+  const transformed = plainToInstance(MembershipResponseDto, plan, {
     groups: [req.user.role],
     excludeExtraneousValues: true,
   });
+
+  return instanceToPlain(transformed, { groups: [req.user.role] });
 }
 
   /** ✅ Create plan (Admin only) */

@@ -25,7 +25,7 @@ export interface UserRow {
 }
 
 export interface TokenRow {
-  expired_at: any;
+  expired_at: Date | string;
   id: number;
   refresh_token_hash: string;
   user_id: number;

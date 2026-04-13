@@ -8,7 +8,7 @@ type SqlParam = string | number | boolean | null | Date;
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   // private connection!: mysql.Connection;
   pool!: mysql.Pool;
-  // connection: any;
+
 
   async onModuleInit() {
    this.pool = mysql.createPool({
@@ -57,7 +57,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     return this.pool;
   }
 
-// ✅ STRICT GENERIC (NO any)
+// ✅ STRICT GENERIC
   async execute<T extends RowDataPacket[] | ResultSetHeader>(
     query: string,
     params: SqlParam[] = [],
