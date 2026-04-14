@@ -34,20 +34,22 @@ export class TrainersController {
   // ========================
   // GET ALL TRAINERS
   // ========================
-@Get()
-async findAll(@Req() req: RequestWithUser) {
-  const trainers = await this.trainersService.findAll();
- return plainToInstance(TrainerResponseDto, trainers, {
-    groups: [req.user.role], // 🔥 dynamic role-based serialization
-    excludeExtraneousValues: true,
-  });
-}
+  @Get()
+  @Roles(UserRole.ADMIN, UserRole.RECEPTIONIST)
+  async findAll(@Req() req: RequestWithUser) {
+    const trainers = await this.trainersService.findAll();
+    return plainToInstance(TrainerResponseDto, trainers, {
+      groups: [req.user.role], // 🔥 dynamic role-based serialization
+      excludeExtraneousValues: true,
+    });
+  }
 
   // ========================
   // GET ONE TRAINER
   // ========================
   @Get(':id')
-async findOne(
+  @Roles(UserRole.ADMIN, UserRole.RECEPTIONIST)
+  async findOne(
   @Param('id', ParseIntPipe) id: number,
   @Req() req: RequestWithUser,
 ) {

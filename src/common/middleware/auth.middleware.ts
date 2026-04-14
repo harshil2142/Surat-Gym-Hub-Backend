@@ -8,6 +8,7 @@ export interface AuthenticatedRequest extends Request {
     userId: number;
     email: string;
     role: string;
+    trainerId?: number;
   };
 }
 
@@ -15,6 +16,7 @@ interface JwtPayload {
   userId: number;
   email: string;
   role: string;
+  trainerId?: number;
 }
 
 @Injectable()
@@ -37,6 +39,7 @@ export class AuthMiddleware implements NestMiddleware {
         userId: decoded.userId,
         email: decoded.email,
         role: decoded.role,
+        trainerId: decoded.trainerId,
       };
 
       next();

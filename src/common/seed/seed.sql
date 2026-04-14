@@ -1,14 +1,34 @@
 -- =====================================================
+-- PREPARE ENVIRONMENT (Wipe existing data safely)
+-- =====================================================
+-- SET FOREIGN_KEY_CHECKS = 0;
+
+-- TRUNCATE TABLE attendance;
+-- TRUNCATE TABLE pt_sessions;
+-- TRUNCATE TABLE trainer_time_slots;
+-- TRUNCATE TABLE membership_transactions;
+-- TRUNCATE TABLE members;
+-- TRUNCATE TABLE trainers;
+-- TRUNCATE TABLE tokens;
+-- TRUNCATE TABLE users;
+-- TRUNCATE TABLE membership_plans;
+
+-- SET FOREIGN_KEY_CHECKS = 1;
+
+-- =====================================================
 -- 1. USERS
 -- =====================================================
+-- Note: Replace the hash below with an actual bcrypt hash of "password123" 
+-- if you plan to log in directly using this SQL dump. 
+-- In seed.ts it generates a true bcrypt hash automatically.
 INSERT INTO users (name, email, password_hash, role, status) VALUES
-('Admin User', 'admin@suratgym.com', '$2b$10$examplehashpassword123', 'ADMIN', 'ACTIVE'),
-('Priya Receptionist', 'priya@suratgym.com', '$2b$10$examplehashpassword123', 'RECEPTIONIST', 'ACTIVE'),
-('Rahul Trainer', 'rahul@suratgym.com', '$2b$10$examplehashpassword123', 'TRAINER', 'ACTIVE'),
-('Sneha Trainer', 'sneha@suratgym.com', '$2b$10$examplehashpassword123', 'TRAINER', 'ACTIVE'),
-('Vikram Trainer', 'vikram@suratgym.com', '$2b$10$examplehashpassword123', 'TRAINER', 'ACTIVE'),
-('Anjali Trainer', 'anjali@suratgym.com', '$2b$10$examplehashpassword123', 'TRAINER', 'ACTIVE'),
-('Karan Trainer', 'karan@suratgym.com', '$2b$10$examplehashpassword123', 'TRAINER', 'ACTIVE');
+('Admin User', 'admin@suratgym.com', '$2a$12$7GiB6ody.yjht32XG1Qv/uXg4g.6.D.F6mNQeUDnbmOP9hE14ldfi', 'ADMIN', 'ACTIVE'), -- password123
+('Priya Receptionist', 'priya@suratgym.com', '$2a$12$7GiB6ody.yjht32XG1Qv/uXg4g.6.D.F6mNQeUDnbmOP9hE14ldfi', 'RECEPTIONIST', 'ACTIVE'), -- password123
+('Rahul Trainer', 'rahul@suratgym.com', '$2a$12$7GiB6ody.yjht32XG1Qv/uXg4g.6.D.F6mNQeUDnbmOP9hE14ldfi', 'TRAINER', 'ACTIVE'), -- password123
+('Sneha Trainer', 'sneha@suratgym.com', '$2a$12$7GiB6ody.yjht32XG1Qv/uXg4g.6.D.F6mNQeUDnbmOP9hE14ldfi', 'TRAINER', 'ACTIVE'), -- password123
+('Vikram Trainer', 'vikram@suratgym.com', '$2a$12$7GiB6ody.yjht32XG1Qv/uXg4g.6.D.F6mNQeUDnbmOP9hE14ldfi', 'TRAINER', 'ACTIVE'), -- password123
+('Anjali Trainer', 'anjali@suratgym.com', '$2a$12$7GiB6ody.yjht32XG1Qv/uXg4g.6.D.F6mNQeUDnbmOP9hE14ldfi', 'TRAINER', 'ACTIVE'), -- password123
+('Karan Trainer', 'karan@suratgym.com', '$2a$12$7GiB6ody.yjht32XG1Qv/uXg4g.6.D.F6mNQeUDnbmOP9hE14ldfi', 'TRAINER', 'ACTIVE'); -- password123
 
 -- =====================================================
 -- 2. MEMBERSHIP PLANS
@@ -92,37 +112,42 @@ INSERT INTO trainer_time_slots (trainer_id,slot_date,start_time,end_time,status)
 (1,'2026-04-09','07:00','08:00','AVAILABLE'),
 (1,'2026-04-10','06:00','07:00','AVAILABLE'),
 (1,'2026-04-10','07:00','08:00','AVAILABLE'),
-
+(1,'2026-04-11','06:00','07:00','AVAILABLE'),
+(1,'2026-04-11','07:00','08:00','AVAILABLE'),
+(1,'2026-04-12','06:00','07:00','AVAILABLE'),
+(1,'2026-04-12','07:00','08:00','AVAILABLE'),
 (2,'2026-04-09','07:00','08:00','AVAILABLE'),
 (2,'2026-04-09','08:00','09:00','AVAILABLE'),
 (2,'2026-04-10','07:00','08:00','AVAILABLE'),
 (2,'2026-04-10','08:00','09:00','AVAILABLE'),
-
+(2,'2026-04-11','07:00','08:00','AVAILABLE'),
+(2,'2026-04-11','08:00','09:00','AVAILABLE'),
+(2,'2026-04-12','07:00','08:00','AVAILABLE'),
+(2,'2026-04-12','08:00','09:00','AVAILABLE'),
 (3,'2026-04-09','08:00','09:00','AVAILABLE'),
 (3,'2026-04-09','09:00','10:00','AVAILABLE'),
 (3,'2026-04-10','08:00','09:00','AVAILABLE'),
 (3,'2026-04-10','09:00','10:00','AVAILABLE'),
-
-(4,'2026-04-09','10:00','11:00','AVAILABLE'),
-(4,'2026-04-09','11:00','12:00','AVAILABLE'),
-(4,'2026-04-10','10:00','11:00','AVAILABLE'),
-(4,'2026-04-10','11:00','12:00','AVAILABLE'),
-
-(5,'2026-04-09','14:00','15:00','AVAILABLE'),
-(5,'2026-04-09','15:00','16:00','AVAILABLE'),
-(5,'2026-04-10','14:00','15:00','AVAILABLE'),
-(5,'2026-04-10','15:00','16:00','AVAILABLE'),
-
-(1,'2026-04-11','06:00','07:00','AVAILABLE'),
-(2,'2026-04-11','07:00','08:00','AVAILABLE'),
 (3,'2026-04-11','08:00','09:00','AVAILABLE'),
-(4,'2026-04-11','10:00','11:00','AVAILABLE'),
-(5,'2026-04-11','14:00','15:00','AVAILABLE'),
-(1,'2026-04-12','06:00','07:00','AVAILABLE'),
-(2,'2026-04-12','07:00','08:00','AVAILABLE'),
+(3,'2026-04-11','09:00','10:00','AVAILABLE'),
 (3,'2026-04-12','08:00','09:00','AVAILABLE'),
+(3,'2026-04-12','09:00','10:00','AVAILABLE'),
+(4,'2026-04-09','09:00','10:00','AVAILABLE'),
+(4,'2026-04-09','10:00','11:00','AVAILABLE'),
+(4,'2026-04-10','09:00','10:00','AVAILABLE'),
+(4,'2026-04-10','10:00','11:00','AVAILABLE'),
+(4,'2026-04-11','09:00','10:00','AVAILABLE'),
+(4,'2026-04-11','10:00','11:00','AVAILABLE'),
+(4,'2026-04-12','09:00','10:00','AVAILABLE'),
 (4,'2026-04-12','10:00','11:00','AVAILABLE'),
-(5,'2026-04-12','14:00','15:00','AVAILABLE');
+(5,'2026-04-09','06:00','07:00','AVAILABLE'),
+(5,'2026-04-09','07:00','08:00','AVAILABLE'),
+(5,'2026-04-10','06:00','07:00','AVAILABLE'),
+(5,'2026-04-10','07:00','08:00','AVAILABLE'),
+(5,'2026-04-11','06:00','07:00','AVAILABLE'),
+(5,'2026-04-11','07:00','08:00','AVAILABLE'),
+(5,'2026-04-12','06:00','07:00','AVAILABLE'),
+(5,'2026-04-12','07:00','08:00','AVAILABLE');
 
 -- =====================================================
 -- 7. PT SESSIONS (30 SESSIONS)
@@ -130,40 +155,36 @@ INSERT INTO trainer_time_slots (trainer_id,slot_date,start_time,end_time,status)
 INSERT INTO pt_sessions
 (session_code,member_id,trainer_id,slot_id,session_type,session_source,amount_charged,session_date,status)
 VALUES
-('PT-2026-001',1,1,1,'WEIGHT_TRAINING','PAID',500,'2026-04-09','COMPLETED'),
-('PT-2026-002',2,2,5,'YOGA','PLAN',0,'2026-04-09','BOOKED'),
-('PT-2026-003',3,3,9,'CARDIO','PLAN',0,'2026-04-09','COMPLETED'),
-('PT-2026-004',4,4,13,'CROSSFIT','PAID',500,'2026-04-09','COMPLETED'),
-('PT-2026-005',5,5,17,'GENERAL','PLAN',0,'2026-04-09','NO_SHOW'),
-
-('PT-2026-006',6,1,2,'WEIGHT_TRAINING','PLAN',0,'2026-04-10','COMPLETED'),
-('PT-2026-007',7,2,6,'YOGA','PAID',500,'2026-04-10','COMPLETED'),
-('PT-2026-008',8,3,10,'CARDIO','PLAN',0,'2026-04-10','BOOKED'),
-('PT-2026-009',9,4,14,'CROSSFIT','PLAN',0,'2026-04-10','COMPLETED'),
-('PT-2026-010',10,5,18,'GENERAL','PAID',500,'2026-04-10','COMPLETED'),
-
-('PT-2026-011',11,1,3,'WEIGHT_TRAINING','PLAN',0,'2026-04-11','COMPLETED'),
-('PT-2026-012',12,2,7,'YOGA','PLAN',0,'2026-04-11','COMPLETED'),
-('PT-2026-013',13,3,11,'CARDIO','PAID',500,'2026-04-11','NO_SHOW'),
-('PT-2026-014',14,4,15,'CROSSFIT','PLAN',0,'2026-04-11','COMPLETED'),
-('PT-2026-015',15,5,19,'GENERAL','PLAN',0,'2026-04-11','COMPLETED'),
-
-('PT-2026-016',16,1,21,'WEIGHT_TRAINING','PAID',500,'2026-04-12','BOOKED'),
-('PT-2026-017',17,2,22,'YOGA','PLAN',0,'2026-04-12','COMPLETED'),
-('PT-2026-018',18,3,23,'CARDIO','PLAN',0,'2026-04-12','COMPLETED'),
-('PT-2026-019',19,4,24,'CROSSFIT','PAID',500,'2026-04-12','COMPLETED'),
-('PT-2026-020',20,5,25,'GENERAL','PLAN',0,'2026-04-12','NO_SHOW'),
-
-('PT-2026-021',1,1,26,'WEIGHT_TRAINING','PLAN',0,'2026-04-09','COMPLETED'),
-('PT-2026-022',2,2,27,'YOGA','PLAN',0,'2026-04-10','COMPLETED'),
-('PT-2026-023',3,3,28,'CARDIO','PAID',500,'2026-04-11','COMPLETED'),
-('PT-2026-024',4,4,29,'CROSSFIT','PLAN',0,'2026-04-12','BOOKED'),
-('PT-2026-025',5,5,30,'GENERAL','PLAN',0,'2026-04-09','COMPLETED'),
-('PT-2026-026',6,1,31,'WEIGHT_TRAINING','PLAN',0,'2026-04-10','COMPLETED'),
-('PT-2026-027',7,2,32,'YOGA','PAID',500,'2026-04-11','COMPLETED'),
-('PT-2026-028',8,3,33,'CARDIO','PLAN',0,'2026-04-12','NO_SHOW'),
-('PT-2026-029',9,4,34,'CROSSFIT','PLAN',0,'2026-04-09','COMPLETED'),
-('PT-2026-030',10,5,35,'GENERAL','PAID',500,'2026-04-10','COMPLETED');
+('PT-2026-001',1,1,1,'WEIGHT_TRAINING','PAID',500,'2026-04-09','BOOKED'),
+('PT-2026-002',2,1,2,'WEIGHT_TRAINING','PLAN',0,'2026-04-09','COMPLETED'),
+('PT-2026-003',3,1,3,'WEIGHT_TRAINING','PLAN',0,'2026-04-10','COMPLETED'),
+('PT-2026-004',4,1,4,'WEIGHT_TRAINING','PAID',500,'2026-04-10','COMPLETED'),
+('PT-2026-005',5,1,5,'WEIGHT_TRAINING','PLAN',0,'2026-04-11','NO_SHOW'),
+('PT-2026-006',6,1,6,'WEIGHT_TRAINING','PLAN',0,'2026-04-11','BOOKED'),
+('PT-2026-007',7,1,7,'WEIGHT_TRAINING','PAID',500,'2026-04-12','COMPLETED'),
+('PT-2026-008',8,1,8,'WEIGHT_TRAINING','PLAN',0,'2026-04-12','COMPLETED'),
+('PT-2026-009',9,2,9,'YOGA','PLAN',0,'2026-04-09','COMPLETED'),
+('PT-2026-010',10,2,10,'YOGA','PAID',500,'2026-04-09','NO_SHOW'),
+('PT-2026-011',11,2,11,'YOGA','PLAN',0,'2026-04-10','BOOKED'),
+('PT-2026-012',12,2,12,'YOGA','PLAN',0,'2026-04-10','COMPLETED'),
+('PT-2026-013',13,2,13,'YOGA','PAID',500,'2026-04-11','COMPLETED'),
+('PT-2026-014',14,2,14,'YOGA','PLAN',0,'2026-04-11','COMPLETED'),
+('PT-2026-015',15,2,15,'YOGA','PLAN',0,'2026-04-12','NO_SHOW'),
+('PT-2026-016',16,2,16,'YOGA','PAID',500,'2026-04-12','BOOKED'),
+('PT-2026-017',17,3,17,'CARDIO','PLAN',0,'2026-04-09','COMPLETED'),
+('PT-2026-018',18,3,18,'CARDIO','PLAN',0,'2026-04-09','COMPLETED'),
+('PT-2026-019',19,3,19,'CARDIO','PAID',500,'2026-04-10','COMPLETED'),
+('PT-2026-020',20,3,20,'CARDIO','PLAN',0,'2026-04-10','NO_SHOW'),
+('PT-2026-021',1,3,21,'CARDIO','PLAN',0,'2026-04-11','BOOKED'),
+('PT-2026-022',2,3,22,'CARDIO','PAID',500,'2026-04-11','COMPLETED'),
+('PT-2026-023',3,3,23,'CARDIO','PLAN',0,'2026-04-12','COMPLETED'),
+('PT-2026-024',4,3,24,'CARDIO','PLAN',0,'2026-04-12','COMPLETED'),
+('PT-2026-025',5,4,25,'CROSSFIT','PAID',500,'2026-04-09','NO_SHOW'),
+('PT-2026-026',6,4,26,'CROSSFIT','PLAN',0,'2026-04-09','BOOKED'),
+('PT-2026-027',7,4,27,'CROSSFIT','PLAN',0,'2026-04-10','COMPLETED'),
+('PT-2026-028',8,4,28,'CROSSFIT','PAID',500,'2026-04-10','COMPLETED'),
+('PT-2026-029',9,4,29,'CROSSFIT','PLAN',0,'2026-04-11','COMPLETED'),
+('PT-2026-030',10,4,30,'CROSSFIT','PLAN',0,'2026-04-11','NO_SHOW');
 
 -- =====================================================
 -- 8. ATTENDANCE (FIXED VERSION)
