@@ -16,7 +16,6 @@ import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { RenewMemberDto } from './dto/renew-member.dto';
 import { RolesGuard } from '../common/guards/roles.guard';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { UserRole } from '../common/enums';
 import { ApiBearerAuth } from '@nestjs/swagger';
@@ -33,7 +32,7 @@ interface AuthRequest extends Request {
 
 @ApiBearerAuth()
 @Controller('members')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 export class MembersController {
   constructor(private readonly membersService: MembersService) {}
 

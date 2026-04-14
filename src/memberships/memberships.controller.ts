@@ -17,14 +17,13 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { UserRole } from '../common/enums';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard' // ✅ ADD THIS
 import type { RequestWithUser } from 'src/common/types/request-with-user';
 import { plainToInstance, instanceToPlain } from 'class-transformer';
 import { MembershipResponseDto } from './dto/membership-response.dto';
 
 @ApiBearerAuth()
 @Controller('membership-plans')
-@UseGuards(JwtAuthGuard, RolesGuard) // ✅ FIX: add AuthGuard
+@UseGuards(RolesGuard)
 export class MembershipsController {
   constructor(private readonly membershipsService: MembershipsService) {}
 

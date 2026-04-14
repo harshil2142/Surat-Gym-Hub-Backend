@@ -78,7 +78,7 @@ export class AuthService {
     );
 
     if (users.length === 0) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('User with this email not found');
     }
 
     const user = users[0];
@@ -118,7 +118,7 @@ export class AuthService {
         [newAttempts, user.id],
       );
 
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('Incorrect password');
     }
 
     // Reset failed attempts on successful login
