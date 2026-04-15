@@ -12,9 +12,8 @@ create table users (
   locked_until TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-deleted_at TIMESTAMP NULL
---   INDEX idx_email (email),
---   INDEX idx_role (role)
+  deleted_at TIMESTAMP NULL
+
 );
 
 create table tokens (

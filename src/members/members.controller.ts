@@ -30,41 +30,35 @@ interface AuthRequest extends Request {
   };
 }
 
-@ApiBearerAuth()
-@Controller('members')
-@UseGuards(RolesGuard)
-export class MembersController {
+  @ApiBearerAuth()
+  @Controller('members')
+  @UseGuards(RolesGuard)
+  export class MembersController {
   constructor(private readonly membersService: MembersService) {}
 
-  /** ✅ Get all members (filters + pagination) */
- @Get()
-async findAll(@Query() query: MemberFilterDto) {
-  return this.membersService.findAll(query);
-}
+  @Get()
+  async findAll(@Query() query: MemberFilterDto) {
+    return this.membersService.findAll(query);
+  }
 
-  /** ✅ Get single member */
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return this.membersService.findOne(id);
   }
 
-  /** ✅ Create member */
- @Post()
-@Roles(UserRole.ADMIN, UserRole.RECEPTIONIST)
-async create(
-  @Body() dto: CreateMemberDto,
-  @Req() req: AuthRequest,
-) {
-  console.log('USER:', req.user); // debug
-
+  @Post()
+  @Roles(UserRole.ADMIN, UserRole.RECEPTIONIST)
+  async create(
+    @Body() dto: CreateMemberDto,
+    @Req() req: AuthRequest,
+  ) {
+  // console.log('USER:', req.user); // debug
   if (!req.user) {
     throw new Error('User not found in request'); // safety
   }
-
   return this.membersService.create(dto, req.user.userId);
 }
 
-  /** ✅ Update member */
   @Patch(':id')
   @Roles(UserRole.ADMIN, UserRole.RECEPTIONIST)
   async update(
@@ -74,7 +68,6 @@ async create(
     return this.membersService.update(id, dto);
   }
 
-  /** ✅ Renew membership */
   @Patch(':id/renew')
   @Roles(UserRole.ADMIN, UserRole.RECEPTIONIST)
   async renew(
@@ -85,45 +78,43 @@ async create(
     return this.membersService.renew(id, dto, req.user.userId);
   }
 
-  
-
-  /** ✅ Soft delete member */
   @Delete(':id')
   @Roles(UserRole.ADMIN)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return this.membersService.remove(id);
   }
-@Patch(':id/freeze')
-async freeze(
-  @Param('id', ParseIntPipe) id: number,
-  @Req() req: AuthRequest,
-) {
-  return this.membersService.freeze(id, req.user.userId);
-}
 
-@Patch(':id/unfreeze')
-async unfreeze(
-  @Param('id', ParseIntPipe) id: number,
-  @Req() req: AuthRequest,
-) {
-  return this.membersService.unfreeze(id, req.user.userId);
-}
+  @Patch(':id/freeze')
+  async freeze(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: AuthRequest,
+  ) {
+    return this.membersService.freeze(id, req.user.userId);
+  }
 
-@Patch(':id/cancel')
-async cancel(
-  @Param('id', ParseIntPipe) id: number,
-  @Req() req: AuthRequest,
-) {
-  return this.membersService.cancel(id, req.user.userId);
-}
+  @Patch(':id/unfreeze')
+  async unfreeze(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: AuthRequest,
+  ) {
+    return this.membersService.unfreeze(id, req.user.userId);
+  }
 
-@Patch(':id/change-plan')
-@Roles(UserRole.ADMIN)
-async changePlan(
-  @Param('id', ParseIntPipe) id: number,
-  @Body() dto: ChangePlanDto,
-  @Req() req: AuthRequest,
-) {
-  return this.membersService.changePlan(id, dto, req.user.userId);
-}
+  @Patch(':id/cancel')
+  async cancel(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: AuthRequest,
+  ) {
+    return this.membersService.cancel(id, req.user.userId);
+  }
+
+  @Patch(':id/change-plan')
+  @Roles(UserRole.ADMIN)
+  async changePlan(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: ChangePlanDto,
+    @Req() req: AuthRequest,
+  ) {
+    return this.membersService.changePlan(id, dto, req.user.userId);
+  }
 }
