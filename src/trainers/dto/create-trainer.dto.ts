@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsEnum, IsOptional, IsString, Min, Max, IsEmail } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsEnum, IsOptional, IsString, Min, Max, IsEmail, Matches } from 'class-validator';
 import { TrainerSpecialisation, UserRole } from '../../common/enums';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
@@ -17,6 +17,7 @@ export class CreateTrainerWithUserDto  {
   @ApiProperty({ example: 'securepassword' })
   @IsString()
   @IsNotEmpty()
+  @Matches(/^[^\p{Extended_Pictographic}]+$/u, { message: 'Password cannot contain emojis' })
   password!: string;
 
   @ApiProperty({ example: 'YOGA' })
